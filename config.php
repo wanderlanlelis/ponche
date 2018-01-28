@@ -16,5 +16,4 @@ function inserirClasse2($class_name){
 spl_autoload_register("inserirClasse");
 spl_autoload_register("inserirClasse2");
 
-
 ?>
