@@ -88,6 +88,8 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 			<option value="S">Semanal</option>
 			<option value="M">Mensal</option>
 		</select>
+		<small>Quantidade de parcelas</small><input type="number" name="parcela" class="form-control">
+
 	</div>
 
     <input type="submit" name="enviar" value="Cadastrar" class="btn btn-primary pull-right" required>
@@ -108,6 +110,7 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 					$movimento->setsubCategoria_id($_POST['subcategoria']);
 					$movimento->setusuario_id(3);
 					$movimento->setDependente_id($_POST['dependente']);
+					$movimento->setparcela($_POST['parcela']);
 					#print_r($movimento);
 				    echo $movimento->inserir();
 				}			

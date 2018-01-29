@@ -29,6 +29,7 @@ class Movimento extends Sql {
     private $subCategoria_id;
     private $usuario_id;
     private $Dependente_id;
+    private $parcela;
     private $cadastro;
     private $status;
 
@@ -64,6 +65,7 @@ class Movimento extends Sql {
     }
     public function setcadastro($value){$this->cadastro = $value; }
     public function setstatus($value){$this->status = $value; }
+    public function setparcela($value){$this->parcela = $value; }
 
     //Get
     public function getID() {return $this->id;    }
@@ -79,33 +81,40 @@ class Movimento extends Sql {
     public function getDependente_id(){return $this->Dependente_id; }
     public function getcadastro(){return $this->cadastro; }
     public function getstatus(){return $this->status; }
+    public function getparcela(){return $this->parcela; }
 
     public function inserir() {
         $sql = new Sql();
         $resultado = $sql->query("
-            CALL sp_movimentoInserir(
-                @descricao      = :DESCRICAO,
-                @valor          = :VALOR,
-                @subcategoria   = :SUBCATEGORIA_ID,
-                @usuario        = 3,
-                @dependente     = 1,
-                @recorrencia    = :RECORRENCIA,
-                @parcela        = 3,
-                @conta          = :CONTA_ID,
-                @tipo           = :TIPO_ID,
-                @vencimento     = :PRAZO);
+            SET 
+            @descricao      = :DESCRICAO,
+            @valor          = :VALOR,
+            @subcategoria   = :SUBCATEGORIA_ID,
+            @usuario        = :USUARIO_ID,
+            @dependente     = :DEPENDENTE_ID,
+            @recorrencia    = :RECORRENCIA,
+            @parcela        = :PARCELA,
+            @conta          = :CONTA_ID,
+            @tipo           = :TIPO_ID,
+            @vencimento     = :PRAZO;
+        CALL sp_movimentoInserir(
+            @descricao, @valor,@subcategoria,
+            @usuario,@dependente, @parcela, @conta, @tipo,
+            @vencimento, @recorrencia);
 
             ", array(
             ":DESCRICAO"        =>$this->getdescricao(),            
             ":VALOR"            =>$this->getvalor(),
-            ":RECORRENCIA"      =>$this->getrecorrencia(),
-            ":PRAZO"            =>$this->getvencimento(),
+            ":SUBCATEGORIA_ID"  =>$this->getsubCategoria_id(),
+            ":DEPENDENTE_ID"    =>$this->getDependente_id(),
+            ":RECORRENCIA"      =>$this->getrecorrencia(),            
             #":DATAPAGAMENTO"    =>$this->getdatapagamento(),
             ":CONTA_ID"         =>$this->getConta_id(),
             ":TIPO_ID"          =>$this->getTipo_id(),
-            ":SUBCATEGORIA_ID"  =>$this->getsubCategoria_id()
-            #":USUARIO_ID"       =>$this->getusuario_id()
-            #":DEPENDENTE_ID"    =>'NULL'#$this->getDependente_id()
+            ":PRAZO"            =>$this->getvencimento(),        
+            ":USUARIO_ID"       =>$this->getusuario_id(),
+            ":PARCELA"          =>$this->getparcela()
+            
         ));
 
 
