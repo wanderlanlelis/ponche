@@ -1,5 +1,7 @@
+USE mydb_ponche;
+DROP PROCEDURE IF EXISTS sp_movimentoApagarAll;
 DELIMITER $$
-CREATE PROCEDURE movimentoApagarAll ()
+CREATE PROCEDURE sp_movimentoApagarAll ()
 
 BEGIN
 

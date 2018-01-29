@@ -2,7 +2,7 @@
 USE mydb_ponche;
 CALL sp_movimentoApagarAll();
 
-SET 
+CALL sp_movimentoInserir(
 	@descricao  	= 'Apartamento',
 	@valor 			= 300.30,
 	@subcategoria 	= 1,
@@ -12,10 +12,6 @@ SET
 	@parcela 		= 5,
     @conta 			= 1,
     @tipo 			= 2,
-    @vencimento 	= '2018-01-31';
-CALL sp_movimentoInserir(
-	@descricao, @valor,@subcategoria,
-	@usuario,@dependente, @parcela, @conta, @tipo,
-    @vencimento, @recorrencia);
+    @vencimento 	= '2018-01-31');
 
 SELECT * FROM vw_movimento;
