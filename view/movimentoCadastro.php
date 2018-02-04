@@ -2,7 +2,7 @@
 require_once("template/header.php");
 require_once("template/nav.php");
 require_once("..".DIRECTORY_SEPARATOR."config.php");
-#error_reporting(0);
+error_reporting(0);
 ?>
 
 <form method="POST">
