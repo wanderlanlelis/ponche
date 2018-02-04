@@ -22,6 +22,7 @@ BEGIN
 	VALUES (@descricao, @valor, @conta, @tipo, @subcategoria, @usuario, @dependente);
     SET @ultimoid = (SELECT LAST_INSERT_ID()); #RECUPERA ID DA ULTIMA INSERÇÃO               
     
+    IF@parcela IS NULL THEN SET @parcela = 1; END IF;
 	IF @parcela  > 1 #DEFINE A DATA DE PAGAMENTO
 		THEN SET @pagamento = NULL; 
 		ELSE SET @pagamento = NOW();  
