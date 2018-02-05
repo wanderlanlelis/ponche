@@ -7,7 +7,7 @@ error_reporting(0);
 
 <form method="POST">
 	<div class="col-md-4 col-md-offset-4">
-	<div class="page-header">
+	<div class="page-header"><br>
     	<h3>Cadastro <small>de movimentação</small></h3>
     </div>
 
@@ -66,7 +66,7 @@ error_reporting(0);
 
     <!--Botão para exibir mais campos do formulario-->
     <button type="button" onclick="dependente_show('dependente')" class="btn btn-defalt btn-sm" >
-    	<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>Mais
+    	<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>Mais opções
     </button>
 
 

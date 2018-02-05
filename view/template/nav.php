@@ -23,22 +23,22 @@ session_start();
             <li><a href="#contact">Contact</a></li>
           -->
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contrato <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movimentação <span class="caret"></span></a>
 
               <ul class="dropdown-menu">
-                <li><a href="cobrancaDetalhada.php">Cobrança detalhada</a></li>
+                <li><a href="movimentoCadastro.php">Registrar um novo</a></li>
                 <!--<li><a href="usuarioFormCadastro.php">Cadasrar</a></li>-->
               </ul>
             </li>
 
             
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Alocação <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatorio <span class="caret"></span></a>
 
               <ul class="dropdown-menu">
-                <li><a href="EquipamentoAlocacaoEstorno.php">Estorno</a></li>
-                <li><a href="">Pesquisar alocação</a></li>
-                <li><a href="eventoinserir.php">alocar evento evento</a></li>
+                <li><a href="#">Receitas</a></li>
+                <li><a href="#">Despesas</a></li>
+                <li><a href="#">Geral</a></li>
               </ul>
             </li>
 
