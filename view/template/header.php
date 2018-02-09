@@ -15,6 +15,6 @@
     <!-- Custom styles for this template -->
     <link href="theme.css" rel="stylesheet">
 
-    <script src="../vendor/bootstrap/js/ie-emulation-modes-warning.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.mim.js"></script>
   </head>
   <body> 
