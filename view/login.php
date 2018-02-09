@@ -12,7 +12,7 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
     </div>
 
 	<div class="well">
-		<p>Preencha os campos abaixo com E-mail e senha para realizar login no sistema.</p>
+		<p>Preencha os campos abaixo com E-mail e senha para entrar.</p>
 	</div>
 
     <input type="email" name="email" placeholder="E-mail" class="form-control">
@@ -23,10 +23,9 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 			
 			<?php 
 				if (isset($_POST['enviar'])) {
-
 			    require_once("..".DIRECTORY_SEPARATOR."config.php");
-			    $cliente = new Cliente();
-			    echo $cliente->fazerLogin($_POST['email'],$_POST['senha']);
+			    $usuario = new Usuario();
+			    echo $usuario->entrar($_POST['email'],$_POST['senha']);
 				}
 			?>
 	</div>
