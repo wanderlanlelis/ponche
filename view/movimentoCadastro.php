@@ -1,8 +1,9 @@
-<?php  
+<?php
 require_once("template/header.php");
 require_once("template/nav.php");
 require_once("..".DIRECTORY_SEPARATOR."config.php");
 error_reporting(0);
+session_start();
 ?>
 
 <form method="POST">
@@ -19,7 +20,7 @@ error_reporting(0);
     	<option value="" disabled selected>Selecione uma conta</option>
     	<?php
 	        $conta = new Conta();
-	        $conta->setusuario_id(3);
+	        $conta->setusuario_id($_SESSION['id']);
 	        $resultado = $conta->pesquisarByUser();
 	        foreach ($resultado as $row) {
 	            echo "<option value=' ".$row['id']."'>".$row['nome']."</option>";
@@ -108,10 +109,9 @@ error_reporting(0);
 					$movimento->setConta_id($_POST['conta']);
 					$movimento->setTipo_id($_POST['tipo']);
 					$movimento->setsubCategoria_id($_POST['subcategoria']);
-					$movimento->setusuario_id(3);
+					$movimento->setusuario_id($_SESSION['id']);
 					$movimento->setDependente_id($_POST['dependente']);
 					$movimento->setparcela($_POST['parcela']);
-					#print_r($movimento);
 				    echo $movimento->inserir();
 				}			
 			?>

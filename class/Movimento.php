@@ -117,8 +117,6 @@ class Movimento extends Sql {
             
         ));
 
-
-
         if ($resultado->rowCount() > 0) { 
             return "Cadastrado com sucesso.";
             }else return "Não foi possivel realizar o cadastro.";
