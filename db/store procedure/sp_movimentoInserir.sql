@@ -1,6 +1,7 @@
-DROP PROCEDURE IF EXISTS movimentoInserir;
+USE mydb_ponche;
+DROP PROCEDURE IF EXISTS sp_movimentoInserir;
 DELIMITER $$
-CREATE PROCEDURE movimentoInserir (
+CREATE PROCEDURE sp_movimentoInserir (
 	descricao VARCHAR(100),
     valor DOUBLE,
     subcategoria INT, 
@@ -10,9 +11,11 @@ CREATE PROCEDURE movimentoInserir (
     conta INT,
     tipo INT,
     recorrencia CHAR,
-    vencimento DATE)
+    vencimento DATE,
+    recorrenciaTipo INT)
 
 BEGIN  
+	SET @vencimentoOriginal = @vencimento;
     
 	INSERT INTO tb_movimento (
 		descricao, valor, Conta_id, Tipo_id, 
@@ -20,25 +23,31 @@ BEGIN
 	VALUES (@descricao, @valor, @conta, @tipo, @subcategoria, @usuario, @dependente);
     SET @ultimoid = (SELECT LAST_INSERT_ID()); #RECUPERA ID DA ULTIMA INSERÇÃO               
     
-	IF @parcela IS NULL OR @parcela  > 1 #DEFINE A DATA DE PAGAMENTO
-		THEN SET @pagamento = NULL; 
+	IF @parcela  > 0 #OR @parcela = '' #DEFINE A DATA DE PAGAMENTO
+		THEN SET @pagamento = NULL;
+        ELSEIF @parcela = '' THEN SET @pagamento = NOW(); 
 		ELSE SET @pagamento = NOW();  
-	END IF;
-	
-    #DEFINE O VALOR E A QUANTIDADE DE PARCELA SE HOUVER PARCELAMENTO
-    SET @valor = (@valor / @parcela);
-	SET	@v1 = 1; #VALOR INICIAL DO CONTADOR
-	WHILE (@v1 <= @parcela) DO    
+	END IF;	
+    
+    IF @parcela = '' THEN SET @parcela = 1; END IF;
+    
+	CASE @recorrenciaTipo # 1 para recorrencia e 2 para parcelamento 
+		WHEN '1' THEN SET @valor = @valor;
+		WHEN '2' THEN SET @valor = (@valor / @parcela);
+	END CASE; 
+    
+	SET	@contador = 1; #VALOR INICIAL DO CONTADOR
+	WHILE (@contador <= @parcela) DO    
 		INSERT INTO tb_movimento_detalhe (movimento_id, valor, pagamento, vencimento) VALUES (
-        @ultimoid, @valor, @pagamento, @vencimento);       
-		      
-		SET @v1 = @v1 + 1;
+        @ultimoid, @valor, @pagamento, @vencimento);
 		
 		CASE @recorrencia #DEFINE A RECORRENCIA SE HOUVER
-			WHEN 'M' THEN SET @vencimento = DATE_ADD(@vencimento, INTERVAL 1 MONTH);
-			WHEN 'S' THEN SET @vencimento = DATE_ADD(@vencimento, INTERVAL 1 WEEK);
+			WHEN 'M' THEN SET @vencimento = DATE_ADD(@vencimentoOriginal, INTERVAL @contador MONTH);
+			WHEN 'S' THEN SET @vencimento = DATE_ADD(@vencimentoOriginal, INTERVAL @contador WEEK);
 			ELSE SET @vencimento = NOW();
-		END CASE;
+		END CASE;    
+    
+    SET @contador = @contador + 1;
     
 	END WHILE;
     

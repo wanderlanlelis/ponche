@@ -32,6 +32,7 @@ class Movimento extends Sql {
     private $parcela;
     private $cadastro;
     private $status;
+    private $recorrenciatipo;
 
     function __construct() {}
 
@@ -66,6 +67,7 @@ class Movimento extends Sql {
     public function setcadastro($value){$this->cadastro = $value; }
     public function setstatus($value){$this->status = $value; }
     public function setparcela($value){$this->parcela = $value; }
+    public function setrecorrenciatipo($value){$this->recorrenciatipo = $value; }
 
     //Get
     public function getID() {return $this->id;    }
@@ -82,6 +84,7 @@ class Movimento extends Sql {
     public function getcadastro(){return $this->cadastro; }
     public function getstatus(){return $this->status; }
     public function getparcela(){return $this->parcela; }
+    public function getrecorrenciatipo(){return $this->recorrenciatipo; }
 
     public function inserir() {
         $sql = new Sql();
@@ -96,11 +99,12 @@ class Movimento extends Sql {
             @parcela        = :PARCELA,
             @conta          = :CONTA_ID,
             @tipo           = :TIPO_ID,
-            @vencimento     = :PRAZO;
+            @vencimento     = :PRAZO,
+            @recorrenciaTipo= :RECORRENCIATIPO;
         CALL sp_movimentoInserir(
             @descricao, @valor,@subcategoria,
             @usuario,@dependente, @parcela, @conta, @tipo,
-            @vencimento, @recorrencia);
+            @vencimento, @recorrencia, @recorrenciaTipo);
 
             ", array(
             ":DESCRICAO"        =>$this->getdescricao(),            
@@ -113,13 +117,20 @@ class Movimento extends Sql {
             ":TIPO_ID"          =>$this->getTipo_id(),
             ":PRAZO"            =>$this->getvencimento(),        
             ":USUARIO_ID"       =>$this->getusuario_id(),
-            ":PARCELA"          =>$this->getparcela()
-            
+            ":PARCELA"          =>$this->getparcela(),
+            ":RECORRENCIATIPO"  =>$this->getrecorrenciatipo()            
         ));
 
-        if ($resultado->rowCount() > 0) { 
-            return "Cadastrado com sucesso.";
-            }else return "Não foi possivel realizar o cadastro.";
+        if ($resultado) { 
+            return #"Cadastrado com sucesso.";
+            "<div class='alert alert-info' role='alert'>
+                Cadastrado com sucesso.
+            </div>";
+
+            }else return #"Não foi possivel realizar o cadastro.";
+             "<div class='alert alert-danger' role='alert'>
+                Não foi possivel realizar o cadastro.
+            </div>";
     }/*
     public function pesquisar() {
         $sql = new Sql();

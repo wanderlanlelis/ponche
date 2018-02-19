@@ -3,7 +3,7 @@ require_once("template/header.php");
 require_once("template/nav.php");
 require_once("..".DIRECTORY_SEPARATOR."config.php");
 error_reporting(0);
-session_start();
+#session_start();
 ?>
 
 <form method="POST">
@@ -78,7 +78,15 @@ session_start();
 		<small>Dependente</small>
 		<select name="dependente" class="form-control">
 	    	<option value="" disabled selected>Selecione um dependente</option>
-	    </select>	
+	    	<?php
+		        $dependente = new Dependente();
+		        $dependente->setusuario_id($_SESSION['id']);
+		        $resultado = $dependente->pesquisarByUser();
+		        foreach ($resultado as $row) {
+		            echo "<option value=' ".$row['id']."'>".$row['nome']."</option>";
+		        }                       
+		    ?>
+	    </select>
 	    
 		<small>Pagamento</small><input type="date" name="datapagamento" class="form-control">
 		<small>Vencimento</small><input type="date" name="vencimento" class="form-control">
@@ -89,7 +97,13 @@ session_start();
 			<option value="S">Semanal</option>
 			<option value="M">Mensal</option>
 		</select>
-		<small>Quantidade de parcelas</small><input type="number" name="parcela" class="form-control">
+
+		<br>
+		<input type="radio" name="recorrenciatipo" value=1>Recorrencia
+  		<input type="radio" name="recorrenciatipo" value=2>Parcelamento
+  		<br>
+
+		<h5>Quantidade</h5><input type="number" name="parcela" class="form-control">
 
 	</div>
 
@@ -112,6 +126,7 @@ session_start();
 					$movimento->setusuario_id($_SESSION['id']);
 					$movimento->setDependente_id($_POST['dependente']);
 					$movimento->setparcela($_POST['parcela']);
+					$movimento->setrecorrenciatipo($_POST['recorrenciatipo']);
 				    echo $movimento->inserir();
 				}			
 			?>
