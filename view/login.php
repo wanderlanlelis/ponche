@@ -2,6 +2,7 @@
 require_once("template/header.php");
 #require_once("template/nav.php");
 require_once("..".DIRECTORY_SEPARATOR."config.php");
+#error_reporting(0);
 ?>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -16,30 +17,29 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
           <a class="navbar-brand" href="#">PONCHE. <small>Geting financial health</small></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
+          <form method="POST" class="navbar-form navbar-right">
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+              <input type="email" placeholder="Email" name="email" class="form-control">
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
+              <input type="password" placeholder="Senha" name="senha" class="form-control">
             </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
+            <input type="submit" name="enviar" value="Entrar" class="btn btn-primary pull-right">
+            <?php 
+				if (isset($_POST['enviar'])) {
+			    require_once("..".DIRECTORY_SEPARATOR."config.php");
+			    $usuario = new Usuario();
+			    $usuario->setemail($_POST['email']);
+			    $usuario->setSenha($_POST['senha']);
+			    echo $usuario->entrar();
+				}
+			?>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
     	
-<!--
-<div class="row navbar-inverse">
-	<div class="col-md-7 col-md-offset-1">
-		<a class="navbar-brand" href="index.php">PONCHE. <small>Geting financial health</small></a>
-	</div>
-
-	<div class="col-md-4">teste</div>
-</div>
--->
-
-
+<div class="vertical-space-x"></div>
 <div class="row">
 	<div class="col-md-5 col-md-offset-1">
 		
@@ -56,26 +56,27 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 		
 		<form method="POST"><!--inicio do formulario-->
 			<div class="page-header">
-		    	<h3>Login <small>de usuario</small></h3>
+		    	<h3>Cadastre-se <br><small>Experimente essa nova fase.</small></h3>
 		    </div>
 
-			<div class="well">
-				<p>Preencha os campos abaixo com E-mail e senha para entrar.</p>
-			</div>
-
+			<input type="text" name="nome" placeholder="Nome" class="form-control">
 		    <input type="email" name="email" placeholder="E-mail" class="form-control">
-		    <input type="password" name="senha" placeholder="Senha" class="form-control">
-			<input type="submit" name="enviar" value="Entrar" class="btn btn-primary pull-right">
+		    <input type="password" name="senha" id="senha" placeholder="Senha" class="form-control">
+		    <input type="password" name="confirm-senha" id="Confirmacao" placeholder="Confirmação de senha" class="form-control">
+		    <br>
+			<input type="submit" name="enviar-cadastro" value="Cadastre-se" class="btn btn-primary" onclick="validarSenha()">
 			
 			<div class="page-header"></div>
 					
-					<?php 
-						if (isset($_POST['enviar'])) {
+					<?php
+						if (isset($_POST['enviar-cadastro'])) {
 					    require_once("..".DIRECTORY_SEPARATOR."config.php");
 					    $usuario = new Usuario();
+					    $usuario->setnome($_POST['nome']);
 					    $usuario->setemail($_POST['email']);
 					    $usuario->setSenha($_POST['senha']);
-					    echo $usuario->entrar();
+					    $usuario->setcontraSenha($_POST['confirm-senha']);
+					    echo $usuario->inserir();
 						}
 					?>
 		</form><!--fim do formulario-->
@@ -84,6 +85,21 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 </div>
 
 <?php require_once("template/footer.php"); ?>
+
+
+<!--
+<script>
+	function validarSenha(){
+	   senha = document.getElementById('senha').value;
+	   Confirmação = document.getElementById('Confirmacao').value;
+	   if (senha != Confirmação) {
+	      alert("As senhas informadas são diferentes\nConfira e digite novamente."); 
+	   }else{
+
+	   }
+	}
+</script>
+-->
 
 
 

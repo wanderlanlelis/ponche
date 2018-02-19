@@ -1,9 +1,15 @@
 <?php
-	require_once("..".DIRECTORY_SEPARATOR."config.php");
-    $conta = new Conta();
-    $conta->getusuario_id(3);
-    $resultado = $conta->pesquisarByUser();
-    foreach ($resultado as $row) {
-        echo $row['id'].">".$row['nome'];
-    }                       
+require_once("..".DIRECTORY_SEPARATOR."config.php");
+#error_reporting(0);
+session_start();
+?>	
+
+<?php
+
+
+	$subcategoria = new Subcategoria();
+	$subcategoria->setusuario_id($_SESSION['id']);
+	$subcategoria->setcategoria(1);
+	$subcategoria->setnome('teste');
+	echo $subcategoria->inserir();                     
 ?>

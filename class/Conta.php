@@ -43,59 +43,45 @@ class Conta extends Sql {
     public function getcadastro(){return $this->cadastro; }
     public function getstatus(){return $this->status; }
 
-    /**public function inserir() {
+    public function inserir() {
         $sql = new Sql();
-        $resultado = $sql->query("INSERT INTO ".$this->entidade." (movimento_id, valor, realizado)
-            VALUES (:MOVIMENTO, :VALOR, :REALIZADO);", array(
+        $resultado = $sql->query("INSERT INTO ".$this->entidade." (nome, descricao, usuario_id)
+            VALUES (:NOME, :DESCRICAO, :USUARIO);", array(
 
-            ":MOVIMENTO"=>$this->getmovimento_id(),            
-            ":VALOR"=>$this->getvalor(),
-            ":REALIZADO"=>$this->getrealizado()
+            ":NOME"=>$this->getNome(),            
+            ":DESCRICAO"=>$this->getdescricao(),
+            ":USUARIO"=>$this->getusuario_id()
         ));
 
         if ($resultado->rowCount() > 0) { 
-            return "Cadastrado com sucesso.";
-            }else return "Não foi possivel realizar o cadastro.";
-    }**/
+            return #"Cadastrado com sucesso.";
+            "<div class='alert alert-info' role='alert'>
+                Cadastrado com sucesso.
+            </div>";
+
+            }else return #"Não foi possivel realizar o cadastro.";
+             "<div class='alert alert-danger' role='alert'>
+                Não foi possivel realizar o cadastro.
+            </div>";
+    }
     public function pesquisar() {
         $sql = new Sql();
         return $sql->select("SELECT * FROM ".$this->entidade);
     }
     public function pesquisarByUser() {
         $sql = new Sql();
-        return $sql->select("SELECT * FROM ".$this->entidade." where usuario_id = :ID;", array(
+        return $sql->select("SELECT * FROM ".$this->entidade." where usuario_id = :ID and status = '1';", array(
             ":ID"      =>$this->getusuario_id()));
     }
-    /**public function atualizar() {
-
+    public function atualizar() {
         $sql = new Sql();
         $resultado = $sql->query("UPDATE ".$this->entidade." SET 
             nome = :NOME,
-            sobrenome = :SOBRENOME,
-            cpf = :CPF,
-            nomefantasia = :NOMEFANTASIA,
-            cnpj = :CNPJ,
-            endereco = :ENDERECO,
-            bairro = :BAIRRO,
-            cidade = :CIDADE,
-            uf = :UF,
-            telefone = :TELEFONE,
-            celular = :CELULAR,
-            email = :EMAIL
+            descricao = :DESCRICAO
 
             WHERE id = :ID", array(            
-            ":NOME"=>$this->getNome(),            
-            ":SOBRENOME"=>$this->getSobrenome(),
-            ":CPF"=>$this->getCpf(),
-            ":NOMEFANTASIA"=>$this->getnomefantasia(),
-            ":CNPJ" =>$this->getcnpj(),
-            ":ENDERECO"=>$this->getendereco(),
-            ":BAIRRO"=>$this->getbairro(),
-            ":CIDADE"=>$this->getcidade(),
-            ":UF"=>$this->getuf(),
-            ":TELEFONE"=>$this->gettelefone(),
-            ":CELULAR"=>$this->getcelular(),
-            ":EMAIL"=>$this->getemail(),
+            ":NOME"=>$this->getNome(),
+            ":DESCRICAO"=>$this->getdescricao(),         
             ":ID"=>$this->getID()
         ));
 
@@ -108,13 +94,13 @@ class Conta extends Sql {
         $sql->query("UPDATE ".$this->entidade." SET `status` = '0' WHERE id = :ID", array(
             ":ID"   =>$value));
 
-        return "Registro removido com sucesso.";
+        return "Removido com sucesso.";
     }
     public function ativar($value) {
         $sql = new Sql();
         $sql->query("UPDATE ".$this->entidade." SET `status` = '1' WHERE id = :ID", array(
             ":ID"   =>$value));
 
-        return "Registro ativado com sucesso.";
-    }**/
+        return "Ativado com sucesso.";
+    }
 }

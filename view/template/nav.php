@@ -38,9 +38,19 @@ session_start();
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatorio <span class="caret"></span></a>
 
               <ul class="dropdown-menu">
-                <li><a href="#">Receitas</a></li>
-                <li><a href="#">Despesas</a></li>
-                <li><a href="#">Geral</a></li>
+                <li><a href="rel_receita.php">Receita</a></li>
+                <li><a href="rel_saida.php">Saida</a></li>
+                <li><a href="rel_comparativo.php">Saida x receita</a></li>
+              </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuração <span class="caret"></span></a>
+
+              <ul class="dropdown-menu">
+                <li><a href="conta.php">Conta</a></li>
+                <li><a href="subcategoria.php">Subcategoria</a></li>
+                <li><a href="dependente.php">Dependente</a></li>
               </ul>
             </li>
 
@@ -62,5 +72,5 @@ session_start();
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <div class="vertical-space-m"></div> 
+    <div class="col-sm"></div> 
     <!--<div class="col-md-3 pull-right">Bem vindo(a) <?php echo $id; ?></div>-->

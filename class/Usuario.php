@@ -27,17 +27,20 @@ class Usuario extends Sql {
     private $nome;
     private $email;
     private $senha;
+    private $contrasenha;
     private $perfil_id;
     private $cadastro;
     private $dataAcesso;
     private $status;
 
     //Set
+    public function setnome($value){ $this->nome = $value; }
     public function setemail($value){ $this->email = $value;}
     public function setSenha($value){ $this->senha = $value;}
     public function setcontraSenha($value){ $this->contrasenha = $value;}
 
     //Get
+    public function getnome(){ return $this->nome ;}
     public function getemail(){ return $this->email ;}
     public function getSenha(){ return $this->senha ;}
     public function getcontraSenha(){ return $this->contrasenha ;}
@@ -62,6 +65,27 @@ class Usuario extends Sql {
         if ($resultado->rowCount() == 1) { 
             echo "<meta http-equiv='refresh' content='0, url=./index.php'>";
             }else return "Usuario ou senha invalido.";
+    }
+    public function inserir() {
+        $sql = new Sql();
+        $resultado = $sql->query("INSERT INTO ".$this->entidade." (nome, email, senha, perfil_id)
+            VALUES (:NOME, :EMAIL, :SENHA, 3);", array(
+
+            ":NOME"=>$this->getnome(),            
+            ":EMAIL"=>$this->getemail(),
+            ":SENHA"=>$this->getSenha()
+        ));
+
+        if ($resultado->rowCount() > 0) { 
+            return "Cadastrado com sucesso.";
+            }else return "Não foi possivel realizar o cadastro.";
+    }
+    public function confereSenha(){
+        if ($this->getSenha() != $this->getcontraSenha() ) {
+            return "As senhas informadas são diferentes, confira e digite novamente.";
         }
     }
+
+}
+
 
