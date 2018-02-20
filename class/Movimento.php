@@ -18,6 +18,7 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 class Movimento extends Sql {
 
     private $entidade = "tb_movimento";
+    private $view     = "vw_movimento";
     private $id;
     private $descricao;
     private $valor;
@@ -131,58 +132,16 @@ class Movimento extends Sql {
              "<div class='alert alert-danger' role='alert'>
                 Não foi possivel realizar o cadastro.
             </div>";
+    }
+    public function pesquisarByUser() {
+        $sql = new Sql();
+        return $sql->select("SELECT * FROM ".$this->view." where usuario_id = :ID AND status = '1' LIMIT 5;", array(
+            ":ID"      =>$this->getusuario_id()));
     }/*
     public function pesquisar() {
         $sql = new Sql();
         return $sql->select("SELECT * FROM ".$this->entidade);
-    }
-    public function pesquisarCPF() {
-        $sql = new Sql();
-        return $sql->select("SELECT * FROM ".$this->entidade." WHERE CPf = :CPF;", array(
-            ":CPF"      =>$this->getCpf()));
-    }
-    public function pesquisarID() {
-        $sql = new Sql();
-        return $sql->select("SELECT * FROM ".$this->entidade." WHERE id = :ID;", array(
-            ":ID"      =>$this->getID()));
-    }
-    public function atualizar() {
-
-        $sql = new Sql();
-        $resultado = $sql->query("UPDATE ".$this->entidade." SET 
-            nome = :NOME,
-            sobrenome = :SOBRENOME,
-            cpf = :CPF,
-            nomefantasia = :NOMEFANTASIA,
-            cnpj = :CNPJ,
-            endereco = :ENDERECO,
-            bairro = :BAIRRO,
-            cidade = :CIDADE,
-            uf = :UF,
-            telefone = :TELEFONE,
-            celular = :CELULAR,
-            email = :EMAIL
-
-            WHERE id = :ID", array(            
-            ":NOME"=>$this->getNome(),            
-            ":SOBRENOME"=>$this->getSobrenome(),
-            ":CPF"=>$this->getCpf(),
-            ":NOMEFANTASIA"=>$this->getnomefantasia(),
-            ":CNPJ" =>$this->getcnpj(),
-            ":ENDERECO"=>$this->getendereco(),
-            ":BAIRRO"=>$this->getbairro(),
-            ":CIDADE"=>$this->getcidade(),
-            ":UF"=>$this->getuf(),
-            ":TELEFONE"=>$this->gettelefone(),
-            ":CELULAR"=>$this->getcelular(),
-            ":EMAIL"=>$this->getemail(),
-            ":ID"=>$this->getID()
-        ));
-
-        if ($resultado->rowCount() > 0) { 
-            return "Registro atualizado com sucesso.";
-            }else return "Não foi possivel atualizar.";
-    }
+    }**/
     public function desativar($value) {
         $sql = new Sql();
         $sql->query("UPDATE ".$this->entidade." SET `status` = '0' WHERE id = :ID", array(
@@ -196,5 +155,5 @@ class Movimento extends Sql {
             ":ID"   =>$value));
 
         return "Registro ativado com sucesso.";
-    }*/
+    }
 }

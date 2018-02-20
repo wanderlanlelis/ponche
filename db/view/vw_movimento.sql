@@ -7,13 +7,22 @@ SELECT #m.*,
 	c.nome 	 		AS conta, 
 	ca.nome  		AS categoria,
 	sc.nome  		AS subcategoria,
+    m.usuario_id	AS usuario_id,
 	u.nome 	 		AS usuario, 
     d.nome   		AS dependente,
     m.descricao		AS descricao,
 	md.valor 		AS valorunidade,
     md.pagamento 	AS pagamento,
     md.vencimento 	AS vencimento,
-    md.quitado 		AS quitado
+    md.quitado 		AS quitado,
+    md.status 		AS status,
+    
+    #usado especificamente para filtros
+    m.tipo_id			AS tipo_id,
+    m.conta_id			AS conta_id,
+    m.subCategoria_id 	AS subcategoria_id,
+    m.dependente_id 	AS dependente_id
+    
 FROM tb_movimento AS m
 	INNER JOIN tb_conta 			AS c  ON (c.id = m.conta_id)
 	INNER JOIN tb_tipo 				AS t  ON (t.id = m.tipo_id)

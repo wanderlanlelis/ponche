@@ -94,11 +94,11 @@ error_reporting(0);
 				$subcategoria->setnome($_POST['nome']);
 			    $subcategoria->inserir();
 			    echo "<meta http-equiv='refresh' content=0, url=?'>";
-			}			
+				}			
 			?>
 
-      </div><!--fim do modal-body-->
-      <div class="modal-footer">
+     	</div><!--fim do modal-body-->
+      	<div class="modal-footer">
       		<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
       		<input type="submit" name="enviar" value="Cadastrar" class="btn btn-primary">
     	</div>

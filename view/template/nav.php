@@ -28,7 +28,7 @@ session_start();
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movimentação <span class="caret"></span></a>
 
               <ul class="dropdown-menu">
-                <li><a href="movimentoCadastro.php">Registrar um novo</a></li>
+                <li><a href="movimento.php">Registrar um novo</a></li>
                 <!--<li><a href="usuarioFormCadastro.php">Cadasrar</a></li>-->
               </ul>
             </li>
