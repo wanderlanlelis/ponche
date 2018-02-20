@@ -3,10 +3,10 @@ drop procedure if exists sp_relatorio;
 DELIMITER $$
 create procedure sp_relatorio (
 	usuario int,
-	tipo varchar(30),    
-    conta varchar(30),
-    subcategoria varchar(30),
-    dependente varchar(30) )
+	tipo varchar(50),    
+    conta varchar(50),
+    subcategoria varchar(50),
+    dependente varchar(50) )
 
 begin
     
@@ -16,16 +16,16 @@ begin
 	END CASE;
     
 	CASE subcategoria
-		WHEN 0 then set subcategoria = ('and subcategoria_id <> @subcategoria'); 
-        ELSE SET subcategoria = ('and subcategoria_id = @subcategoria');
+		WHEN 0 then set subcategoria = (' and subcategoria_id <> @subcategoria'); 
+        ELSE SET subcategoria = (' and subcategoria_id = @subcategoria');
 	END CASE;
     
 	CASE conta
-		WHEN 0 then set conta = ('and contao_id <> @conta'); 
-        ELSE SET conta = ('and conta_id = @conta');
+		WHEN 0 then set conta = (' and conta_id <> @conta'); 
+        ELSE SET conta = (' and conta_id = @conta');
 	END CASE;
     
-    SET @sql = CONCAT('select * from vw_movimento where usuario_id = @usuario ',tipo);
+    SET @sql = CONCAT('select * from vw_movimento where usuario_id = @usuario ',tipo, subcategoria, conta);
 
 	PREPARE stmt FROM @sql;
 	EXECUTE stmt;
@@ -37,12 +37,7 @@ DELIMITER ;
 set @usuario = 4;
 set @tipo = '2';
 set @conta = '0';
-set @subcategoria = '0';
+set @subcategoria = '16';
 set @dependente = '0';
 call mydb_ponche.sp_relatorio(
 @usuario, @tipo, @conta, @subcategoria, @dependente);
-
-
-id, tipo, conta, categoria, subcategoria, usuario_id, usuario, dependente, descricao, valorunidade, pagamento, vencimento, quitado, status, tipo_id, conta_id, subcategoria_id, dependente_id
-
-
