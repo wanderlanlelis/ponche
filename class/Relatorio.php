@@ -53,7 +53,7 @@ class Relatorio extends Sql {
             SELECT * FROM ".$this->entidade."
             where status = '1'
             and usuario_id = :ID
-            and tipo = :TIPO;", array(
+            and tipo_id = :TIPO;", array(
             ":ID"      =>$this->getusuario_id(),
             ":TIPO"    =>$this->gettipo()
         ));

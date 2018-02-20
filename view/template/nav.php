@@ -38,9 +38,7 @@ session_start();
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatorio <span class="caret"></span></a>
 
               <ul class="dropdown-menu">
-                <li><a href="rel_receita.php">Receita</a></li>
-                <li><a href="rel_saida.php">Saida</a></li>
-                <li><a href="rel_comparativo.php">Saida x receita</a></li>
+                <li><a href="relatorioSimples.php">Simples</a></li>
               </ul>
             </li>
 

@@ -2,19 +2,18 @@
 require_once("template/header.php");
 require_once("template/nav.php");
 require_once("..".DIRECTORY_SEPARATOR."config.php");
-#error_reporting(0);
 ?>	
 
 <div class="col-md-8 col-md-offset-2" >
 	<div class="page-header"><br>
     	<h3>Relatorio <small>estatico</small></h3>
     </div>
-
 	<div class="alert alert-silver alert-dismissible" role="alert">
 	  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	  		<span aria-hidden="true">&times;</span>
 	  	</button> 	
-	  	<strong>Informação!</strong><p>Você pode filtrar selecionando os campos abaixo.</p>
+	  	<strong>Informação!</strong>
+	  	<p>Você pode filtrar selecionando os campos abaixo.</p>
 	</div>
 
 	<form method="POST">
@@ -29,7 +28,6 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 		        }                       
 		    ?>
 	    </select>
-
 	    <select name="tipo" class="form-control">
 	    	<option value="" disabled selected>Selecione o tipo</option>
 	    	<?php
@@ -40,7 +38,6 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 		        }                       
 		    ?>
 	    </select>
-
 	    <select name="categoria" class="form-control">
 	    	<option value="" disabled selected>Selecione uma categoria</option>
 	    	<?php
@@ -51,7 +48,6 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 		        }                       
 		    ?>
 	    </select>
-
 	    <select name="subcategoria" class="form-control">
 	    	<option value="" disabled selected>Selecione uma subcategoria</option>
 	    	<?php
@@ -66,9 +62,7 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 	</form>
 			
 	<?php
-
 	if (isset($_POST['enviar'])) {
-
         $relatorio = new Relatorio();
         $relatorio->setusuario_id($_SESSION['id']);
         $relatorio->settipo($_POST['tipo']);
@@ -92,8 +86,7 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 						<td>".$row['tipo']."</td>
 						<td>".$row['conta']."</td>
 						<td>".$row['categoria']."</td>
-						<td>".$row['subcategoria']."</td>
-						
+						<td>".$row['subcategoria']."</td>						
 					</tr>";
 	        } 
         }else echo "

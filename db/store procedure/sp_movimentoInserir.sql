@@ -34,6 +34,7 @@ BEGIN
 	CASE @recorrenciaTipo # 1 para recorrencia e 2 para parcelamento 
 		WHEN '1' THEN SET @valor = @valor;
 		WHEN '2' THEN SET @valor = (@valor / @parcela);
+        ELSE SET @valor = @valor;
 	END CASE; 
     
 	SET	@contador = 1; #VALOR INICIAL DO CONTADOR
