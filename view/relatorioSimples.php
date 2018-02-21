@@ -58,6 +58,18 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 		        }                       
 		    ?>
 	    </select>
+	    <select name="dependente" class="form-control">
+	    	<option value="" disabled selected>Selecione um dependente</option>
+	    	<?php
+		        $dependente = new Dependente();
+		        $dependente->setusuario_id($_SESSION['id']);
+		        $resultado = $dependente->pesquisarByUser();
+		        foreach ($resultado as $row) {
+		            echo "<option value=' ".$row['id']."'>".$row['nome']."</option>";
+		        }                       
+		    ?>
+	    </select>
+	    <input type="text" class="form-control" name="descricao" placeholder="Descricao">
 		<input type="submit" name="enviar" value="Pesquisar" class="btn btn-primary form-control">
 	</form>
 			

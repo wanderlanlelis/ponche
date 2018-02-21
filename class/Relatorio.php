@@ -20,6 +20,7 @@ class Relatorio extends Sql {
     private $entidade = "vw_movimento";
     private $id;
     private $tipo;
+    private $conta;
     private $categoria;
     private $usuario_id;
     private $cadastro;
@@ -30,7 +31,10 @@ class Relatorio extends Sql {
     //Set
     public function setID($value){$this->id = $value; }
     public function settipo($value){$this->tipo = $value; }
-    public function setcategoria($value){$this->categoria = $value; }
+    public function setconta($value){$this->conta = $value; }
+    public function setsubcategoria($value){$this->categoria = $value; }
+    public function setdependente($value){$this->dependente = $value; }
+    public function setdescricao($value){$this->descricao = $value; }
     public function setusuario_id($value){$this->usuario_id = $value; }
     public function setcadastro($value){$this->cadastro = $value; }
     public function setstatus($value){$this->status = $value; }
@@ -38,7 +42,10 @@ class Relatorio extends Sql {
     //Get
     public function getID(){return $this->id; }
     public function gettipo(){return $this->tipo; }
-    public function getcategoria(){return $this->categoria; }
+    public function getconta(){return $this->conta; }
+    public function getsubcategoria(){return $this->categoria; }
+    public function getdependente(){return $this->dependente; }
+    public function getdescricao(){return $this->descricao; }
     public function getusuario_id(){return $this->usuario_id; }
     public function getcadastro(){return $this->cadastro; }
     public function getstatus(){return $this->status; }
@@ -49,13 +56,22 @@ class Relatorio extends Sql {
     }
     public function pesquisarByUser() {
         $sql = new Sql();
-        return $sql->select("
-            SELECT * FROM ".$this->entidade."
-            where status = '1'
-            and usuario_id = :ID
-            and tipo_id = :TIPO;", array(
-            ":ID"      =>$this->getusuario_id(),
-            ":TIPO"    =>$this->gettipo()
+        return $sql->query("
+            SET @usuario        = :ID;
+            SET @tipo           = :TIPO;
+            SET @conta          = :CONTA;
+            SET @subcategoria   = SUBCATEGORIA;
+            SET @dependente     = DEPENDENTE;
+            SET @descricao      = '% :DESCRICAO %';
+            CALL sp_relatorio(
+            @usuario, @tipo, @conta, @subcategoria, @dependente, @descricao);", 
+            array(
+            ":ID"           =>$this->getusuario_id(),
+            ":TIPO"         =>$this->gettipo(),
+            ":CONTA"        =>$this->getconta(),
+            ":SUBCATEGORIA" =>$this->getsubcategoria(),
+            ":DEPENDENTE"   =>$this->getdependente(),
+            ":DESCRICAO"    =>$this->getdescricao()
         ));
     }
     public function ativar($value) {

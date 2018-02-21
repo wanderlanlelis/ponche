@@ -102,7 +102,8 @@ class Movimento extends Sql {
             @tipo           = :TIPO_ID,
             @vencimento     = :PRAZO,
             @recorrenciaTipo= :RECORRENCIATIPO;
-        CALL sp_movimentoInserir(
+            
+            CALL sp_movimentoInserir(
             @descricao, @valor,@subcategoria,
             @usuario,@dependente, @parcela, @conta, @tipo,
             @vencimento, @recorrencia, @recorrenciaTipo);
