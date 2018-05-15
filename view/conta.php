@@ -10,11 +10,11 @@ error_reporting(0);
     	<h3>Configurar <small>conta</small></h3>
     </div>
 
-	<div class="alert alert-silver alert-dismissible" role="alert">
-	  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	  		<span aria-hidden="true">&times;</span>
-	  	</button> 	
-	  	<strong>Informação!</strong><p>Você pode fazer um cadastro clicando no botão abaixo.</p>
+	<div class="alert alert-info alert-dismissible fade show" role="alert">
+		<p>Crie um novo clicando no botão abaixo.</p>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	    	<span aria-hidden="true">&times;</span>
+		</button>
 	</div>
 
 	<p><!-- Large modal - abre o formulario de cadastro -->

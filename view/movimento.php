@@ -2,65 +2,93 @@
 require_once("template/header.php");
 require_once("template/nav.php");
 require_once("..".DIRECTORY_SEPARATOR."config.php");
-#error_reporting(0);
 ?>	
 
-<div class="col-md-8 col-md-offset-2" >
-	<div class="page-header"><br>
-    	<h3>Configurar <small>lançamento</small></h3>
-    </div>
+<div class="container">
+  	<div class="row justify-content-md-center">
+		<div class="col-md-10 col-md-offset-1" >
+			<div class="page-header"><br>
+		   		<h3>Configurar <small>lançamento</small></h3>
+		  	</div>
+			<div class="alert alert-silver alert-dismissible" role="alert">
+			  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			  		<span aria-hidden="true">&times;</span>
+			  	</button> 	
+			  	<strong>Informação!</strong><p>Você pode fazer um cadastro clicando no botão abaixo.</p>
+			</div>
 
-	<div class="alert alert-silver alert-dismissible" role="alert">
-	  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	  		<span aria-hidden="true">&times;</span>
-	  	</button> 	
-	  	<strong>Informação!</strong><p>Você pode fazer um cadastro clicando no botão abaixo.</p>
-	</div>
+			<p><button type="button" class="btn btn-secondary btn-block" data-toggle="modal" data-target="#myModal">
+				Cadastrar
+			</button></p>
 
-	<p><!-- Large modal - abre o formulario de cadastro -->
-		<button type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#myModal">
-			Cadastrar
-		</button>
-	</p>
+
+			<!-- aparecer no desktop
+            <div class="mobile-hide"><h1 id="logo"><a href="#">Recarga de Toner e Cartuchos, Manutenção de Impressoras</a></h1></div>
+      		<!- aparecer no mobile  
+            <div class="mobile"><div class="desktop-hide"><h1 class="logomobile"><a href="#">Recarga de Toner e Cartuchos, Manutenção de Impressoras</a></h1></div></div>
+			--> 
 			
-	<?php #<!-- List group -->
-        $movimento = new Movimento();
-        $movimento->setusuario_id($_SESSION['id']);
-        $resultado = $movimento->pesquisarByUser();
+			<?php #<!-- List group -->
+		        $movimento = new Movimento();
+		        $movimento->setusuario_id($_SESSION['id']);
+		        $resultado = $movimento->pesquisarByUser();
 
-        if ($resultado) {
-			echo "
-        	<div class='panel panel-default'>			  
-			<div class='panel-heading'>Ultimos lançamentos</div>
-			<div class='col-md'>
-	        		<table class='table'>
-						<tr>
-							<th>Tipo</th>
-							<th>Conta</th>
-							<th>Descrição</th>
-							<th>Valor</th>
-							<th></th>
-						</tr>";
-	        foreach ($resultado as $row) 
-	        {
-	        	echo "	        		
-					<tr>
-						<td>".$row['tipo']."</td>
-						<td>".$row['conta']."</td>
-						<td>".$row['descricao']."</td>
-						<td>R$ ".$row['valorunidade']."</td>
-						<td>
-							<a href='?a=del&id=".$row['id']." ''>
-        						<button class='btn btn-primary btn-xs pull-right'>Detalhe</button>
-        					</a>
-        				</td>
-					</tr>";
-	        } 
-        }else echo "
-			<div class='alert alert-danger' role='alert'>
-				<p>Nenhum registro encontrado!</p>
-			</div>";                      
-    ?>
+		        if ($resultado) {
+					echo "
+		        	<div class='panel panel-default'>			  
+						<div class='panel-heading'>Ultimos lançamentos</div>
+							<div class='table-responsive-md'>
+				        		<table class='table table-sm'>
+				        			<thead class='mobile-hide'>
+										<tr>
+											<th>Tipo</th>
+											<th>Subcategoria</th>
+											<th>Descrição</th>
+											<th>Valor</th>
+											<th></th>
+										</tr>
+									<thead>
+
+									<thead class='desktop-hide'>
+										<tr>
+											<th>Descrição</th>
+											<th>Valor</th>
+											<th></th>
+										</tr>
+									<thead>";
+			        foreach ($resultado as $row) {
+			        	echo "
+			        		<tbody class='mobile-hide'>	        		
+								<tr>
+									<td>".$row['tipo']."</td>
+									<td>".$row['subcategoria']."</td>
+									<td>".$row['descricao']."</td>
+									<td>R$ ".$row['valorunidade']."</td>
+									<td>
+										<a href='?a=del&id=".$row['id']." '' class='float-right'>
+			        						<button class='btn btn-dark btn-sm pull-right'>+</button>
+			        					</a>
+			        				</td>
+								</tr>
+							</tbody>
+
+							<tbody class='desktop-hide'>	        		
+								<tr>
+									<td>".$row['descricao']."</td>
+									<td>R$ ".$row['valorunidade']."</td>
+									<td>
+										<a href='?a=del&id=".$row['id']." '' class='float-right'>
+			        						<button class='btn btn-dark btn-sm pull-right'>+</button>
+			        					</a>
+			        				</td>
+								</tr>
+							</tbody>";
+			        	} 
+		        }else echo "
+					<div class='alert alert-danger' role='alert'>
+						<p>Nenhum registro encontrado!</p>
+					</div>";                      
+			?>
 </div>
 
 <!-- Large modal -->

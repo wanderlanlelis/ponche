@@ -77,26 +77,31 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
 	if (isset($_POST['enviar'])) {
         $relatorio = new Relatorio();
         $relatorio->setusuario_id($_SESSION['id']);
+        $relatorio->setconta($_POST['conta']);
         $relatorio->settipo($_POST['tipo']);
-        $resultado = $relatorio->pesquisarByUser();
+        $relatorio->setsubcategoria($_POST['subcategoria']);
+        $relatorio->setdependente($_POST['dependente']);
+        $relatorio->setdescricao($_POST['descricao']);
+        $resultado = $relatorio->relatorio();
 
         if ($resultado) {
-			echo "
+					echo "
         	<div class='panel panel-default'>			  
-			<div class='panel-heading'>Resultado</div>
-			<div class='col-md'>
-	        		<table class='table'>
-						<tr>
-							<th>Tipo</th>
-							<th>Conta</th>
-							<th>Categoria</th>
-							<th>Subcategoria</th>
-						</tr>";
+					<div class='panel-heading'>Resultado</div>
+					<div class='col-md'>
+        		<table class='table'>
+					<tr>
+						<th>Tipo</th>
+						<th>Conta</th>
+						<th>Categoria</th>
+						<th>Subcategoria</th>
+					</tr>";
+
 	        foreach ($resultado as $row) {
-	        	echo "	        		
+	        echo "	        		
 					<tr>
 						<td>".$row['tipo']."</td>
-						<td>".$row['conta']."</td>
+						<td>".$row['c.nome']."</td>
 						<td>".$row['categoria']."</td>
 						<td>".$row['subcategoria']."</td>						
 					</tr>";

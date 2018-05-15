@@ -106,9 +106,9 @@ class Movimento extends Sql {
             CALL sp_movimentoInserir(
             @descricao, @valor,@subcategoria,
             @usuario,@dependente, @parcela, @conta, @tipo,
-            @vencimento, @recorrencia, @recorrenciaTipo);
+            @vencimento, @recorrencia, @recorrenciaTipo);", 
 
-            ", array(
+            array(
             ":DESCRICAO"        =>$this->getdescricao(),            
             ":VALOR"            =>$this->getvalor(),
             ":SUBCATEGORIA_ID"  =>$this->getsubCategoria_id(),
