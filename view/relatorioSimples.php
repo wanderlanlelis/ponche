@@ -2,6 +2,7 @@
 require_once("template/header.php");
 require_once("template/nav.php");
 require_once("..".DIRECTORY_SEPARATOR."config.php");
+error_reporting(0);
 ?>	
 
 <div class="col-md-8 col-md-offset-2" >
@@ -83,6 +84,8 @@ require_once("..".DIRECTORY_SEPARATOR."config.php");
         $relatorio->setdependente($_POST['dependente']);
         $relatorio->setdescricao($_POST['descricao']);
         $resultado = $relatorio->relatorio();
+
+        var_dump(array($resultado));
 
         if ($resultado) {
 					echo "

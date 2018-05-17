@@ -21,7 +21,7 @@ class Relatorio extends Sql {
   private $tipo;
   private $conta;
   private $categoria;
-  private $usuario_id;
+  private $usuario_id = 0;
   private $cadastro;
   private $status;
 
@@ -48,17 +48,24 @@ class Relatorio extends Sql {
   public function getstatus(){return $this->status; }
 
   public function pesquisar() {
-      $sql = new Sql();
-      return $sql->select("SELECT * FROM ".$this->entidade);
+	  $sql = new Sql();
+	  return $sql->query("SELECT * FROM ".$this->entidade);
   }
 	public function relatorio() {
-      $sql = new Sql();
-      return $sql->select(".
-      	set @usuario = '31';
-call sp_relatorio_teste(@usaurio);",
-        array(
-        	":USUARIO_ID"       =>$this->getusuario_id()
-      ));
+    $sql = new Sql();
+    return $sql->select("
+			CALL sp_relatorio_teste(:USUARIO_ID);",
+      array(
+      	":USUARIO_ID" =>'31';      	
+    ));
+  }
+ 	public function teste() {
+    $sql = new Sql();
+    return $sql->select("
+			CALL sp_relatorio_teste(".$this->getusuario_id().");",
+      array(
+      	
+    ));
   }
   public function relatorio_old() {
       $sql = new Sql();
@@ -87,9 +94,9 @@ call sp_relatorio_teste(@usaurio);",
       ));
   }
   public function painel($value){
-      $sql = new Sql();
-      return $sql->select("
-        SELECT * FROM vw_painel WHERE usuario_id = :ID;", array(
-        ":ID" =>$value));
+    $sql = new Sql();
+    return $sql->select("
+      SELECT * FROM vw_painel WHERE usuario_id = :ID;", array(
+      ":ID" =>$value));
   }
 }
